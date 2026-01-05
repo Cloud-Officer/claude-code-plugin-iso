@@ -26,12 +26,6 @@ Claude Code plugin for ISO 27001 procedure review and creation.
 /plugin install co-iso@cloud-officer
 ```
 
-### Local Development
-
-```bash
-claude --plugin-dir /path/to/claude-code-plugin-iso
-```
-
 ## Usage
 
 | Command                       | Description                          |
