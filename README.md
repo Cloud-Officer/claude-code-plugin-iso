@@ -2,10 +2,10 @@
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
+* [Introduction](#introduction)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Contributing](#contributing)
 
 ## Introduction
 
@@ -13,11 +13,11 @@ Claude Code plugin for ISO 27001 procedure review and creation.
 
 ### Features
 
-- Review procedure documents against ISO 27002:2022 controls
-- Compare with legacy PDF procedures for missing details
-- Construct missing sections from control references
-- Apply fixes with minimal diff format
-- Validate markdown formatting
+* Review procedure documents against ISO 27002:2022 controls
+* Compare with legacy PDF procedures for missing details
+* Construct missing sections from control references
+* Apply fixes with minimal diff format
+* Validate markdown formatting
 
 ## Installation
 
@@ -56,6 +56,4 @@ Pull requests are the best way to propose changes to the codebase. We actively w
 4. Make sure your code lints.
 5. Issue that pull request!
 
-When you submit code changes, your submissions are understood to be under the same [License](license) that covers the
-project. Feel free to contact the maintainers if that's a concern.
-
+When you submit code changes, your submissions are understood to be under the same [License](license) that covers the project. Feel free to contact the maintainers if that's a concern.
