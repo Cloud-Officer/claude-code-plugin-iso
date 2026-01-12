@@ -6,25 +6,45 @@ Review ISO 27001 procedure documents in: $ARGUMENTS
 
 When asked to review a folder, identify and categorize files as follows:
 
-| File Type                   | Identification                                                                  | Purpose                                                                                                                                                                             |
-|-----------------------------|---------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Procedure Document**      | Markdown file with "Procedure" in the filename                                  | Primary document to review and transform. Apply all review guidelines to this file.                                                                                                 |
-| **Control Reference Files** | Markdown files with "control" in the filename (e.g., `iso27001-control-5.9.md`) | ISO 27002:2022 guidance excerpts. Use these to validate that the procedure adequately covers each control's requirements. Do NOT review or transform these files.                   |
-| **Legacy Procedure PDFs**   | PDF files in the folder                                                         | Previous standalone procedures that have been consolidated into the main procedure document. These contain operational details that may be missing from the consolidated procedure. |
+| File Type                   | Identification                                                                  | Purpose                                                                                                                                                                                                                            |
+|-----------------------------|---------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Procedure Document**      | Markdown file with "Procedure" in the filename                                  | Primary document to review and transform. Apply all review guidelines to this file.                                                                                                                                                |
+| **Control Reference Files** | Markdown files with "control" in the filename (e.g., `iso27001-control-5.9.md`) | ISO 27002:2022 guidance excerpts. Use these to validate that the procedure adequately covers each control's requirements. Do NOT review or transform these files.                                                                  |
+| **Legacy Procedure PDFs**   | PDF files in the folder                                                         | Previous standalone procedures provided **for analysis only**. Use these to identify missing operational details, but do NOT reference them in the output — the goal is to replace them entirely with the new generated procedure. |
 
 **Review Workflow:**
 
 1. Identify the procedure document (filename contains "Procedure")
-2. Read all control reference files to understand the ISO 27002 requirements
-3. **Thoroughly review each PDF file section-by-section** and compare against the procedure document to identify:
+2. **Gather organizational context** by searching for and reading other
+   `*Procedure.md` files in sibling folders (excluding the target procedure being reviewed). Use this context to:
+
+   - **Avoid duplication
+     **: If a topic is already covered in another procedure, reference that procedure instead of repeating the content. Use format: "See [Procedure Name] for [topic]."
+   - **Ensure consistency
+     **: Use the same terminology, role names, and phrasing patterns established in existing procedures
+   - **Validate cross-references**: Verify that any referenced procedures actually exist and use correct names
+   - **Inform content creation
+     **: When writing or updating sections, draw on the broader organizational context — understand how roles are defined, what approval chains exist, and what processes are already documented elsewhere
+   - **Identify appropriate scope boundaries
+     **: Recognize when content belongs in a different procedure and recommend moving or referencing it accordingly
+
+3. Read all control reference files to understand the ISO 27002 requirements
+4. **Thoroughly review each PDF file section-by-section** and compare against the procedure document to identify:
+
    - Specific requirements, frequencies, or thresholds present in the PDF but absent from the procedure
    - Operational details (audit cycles, device specifications, incident categories) that add compliance value
    - Procedural steps or checklists that provide implementation clarity
-4. Apply the full review process to the procedure document only
-5. In the review output, note any gaps where control reference files indicate requirements not addressed in the procedure
-6. **Recommend incorporating relevant content from legacy PDFs** — err on the side of flagging content for human review rather than dismissing it
 
-**Important:** Do NOT output notes explaining that control files or PDFs are "reference material" or "not requiring review." This is understood. Focus the review output entirely on the procedure document.
+5. Apply the full review process to the procedure document only
+6. In the review output, note any gaps where control reference files indicate requirements not addressed in the procedure
+7. **Recommend incorporating relevant content from legacy PDFs
+   ** — err on the side of flagging content for human review rather than dismissing it
+
+**Important:**
+
+- Do NOT output notes explaining that control files or PDFs are "reference material" or "not requiring review." This is understood. Focus the review output entirely on the procedure document.
+- **Do NOT reference PDFs in the generated procedure content.
+  ** The PDFs are provided for analysis of missing information only. The goal is to replace them entirely with the new procedure — all relevant details should be incorporated directly into the procedure text, never as citations to or references of the legacy PDFs.
 
 ---
 
@@ -44,10 +64,12 @@ If no markdown file with "Procedure" in the filename exists in the folder:
 2. Read all legacy PDFs to extract operational details
 3. Create a new procedure document with the standard structure (see Part 2)
 4. For each control:
+
    - Extract the Purpose and implementation guidance from control reference files
    - Transform "should" statements into "shall" requirements
    - Incorporate specific operational details from legacy PDFs
    - Assign responsible roles based on organizational context (small org principles)
+
 5. Name the file: `[Topic]-Procedure.md` (e.g., `Asset-Management-Procedure.md`)
 
 ### When Sections Are Missing
@@ -55,17 +77,18 @@ If no markdown file with "Procedure" in the filename exists in the folder:
 If the procedure document exists but is missing required sections or control coverage:
 
 1. **Identify missing sections** by comparing:
+
    - Controls listed in Purpose section vs. sections in document body
    - ISO 27002 guidance elements vs. procedure coverage
    - Legacy PDF content vs. procedure content
 
 2. **Construct missing sections** using this approach:
 
-| Source                      | How to Use                                                                     |
-|-----------------------------|--------------------------------------------------------------------------------|
-| **Control Reference Files** | Extract Purpose, transform "should" → "shall", address all guidance elements   |
-| **Legacy PDFs**             | Extract specific frequencies, thresholds, checklists, role assignments         |
-| **Organizational Context**  | Apply small org principles — simplify roles, reduce approval layers            |
+| Source                      | How to Use                                                                   |
+|-----------------------------|------------------------------------------------------------------------------|
+| **Control Reference Files** | Extract Purpose, transform "should" → "shall", address all guidance elements |
+| **Legacy PDFs**             | Extract specific frequencies, thresholds, checklists, role assignments       |
+| **Organizational Context**  | Apply small org principles — simplify roles, reduce approval layers          |
 
 1. **Section Construction Format:**
 
@@ -92,6 +115,8 @@ When constructing new content:
 - **Apply organizational context** — small org, combined roles, simple approval chains
 - **Mark assumptions clearly** — if operational details are not in PDFs, use `[TBD: specify X]` placeholders
 - **Maintain consistent style** — match existing procedure sections if document partially exists
+- **Never reference PDFs in generated content
+  ** — incorporate the actual content from PDFs directly into the procedure text; the goal is to replace the legacy PDFs entirely, so the new procedure must be self-contained with no citations to or dependencies on the source PDFs
 
 ### Output for Construction
 
@@ -100,17 +125,21 @@ When constructing new content, present it as:
 ```markdown
 ## Proposed New Section: [Section Name]
 
-**Sources used:**
+**Sources used:** (for reviewer reference only — not included in final document)
+
 - Control: [control ID and title]
 - PDF: [filename and relevant sections]
 
 **Proposed content:**
 
-[The constructed section content]
+[The constructed section content — must be fully self-contained with no references to source PDFs]
 
 ---
 Confirm to add this section to the procedure, or provide feedback for revisions.
 ```
+
+**Important:
+** The "Sources used" block is for transparency during the review process only. The "Proposed content" itself must be entirely self-contained — it must not cite, reference, or depend on the legacy PDFs. All relevant information from the PDFs should be incorporated directly into the text.
 
 ---
 
@@ -125,7 +154,8 @@ Apply the principle of **minimal necessary intervention**:
 
 **Template Variables:**
 
-Text containing `{{...}}` syntax (e.g., `{{tenant.subdomain}}`, `{{company.name}}`) represents template variables that will be replaced by a templating engine. Do NOT flag these as:
+Text containing `{{...}}` syntax (e.g., `{{tenant.subdomain}}`,
+`{{company.name}}`) represents template variables that will be replaced by a templating engine. Do NOT flag these as:
 
 - Incomplete or placeholder text
 - Missing information requiring human input
@@ -337,6 +367,17 @@ Transform descriptive language to formal procedural tone:
 | **Redundant Headings**    | Remove sub-headings that merely repeat the parent heading concept                                                                      |
 | **Logical Flow**          | Sections shall follow: Purpose → Requirements → Implementation → Verification                                                          |
 
+### 2.2.1 Section Ordering
+
+The main content sections (those appearing after Terms and Definitions) shall be ordered to match the sequence of controls listed in the Purpose section's control table. This ensures:
+
+- Logical progression through related controls
+- Easy cross-referencing between Purpose and procedure body
+- Consistent document structure across all procedures
+
+When creating a new procedure or restructuring an existing one, verify that each
+`#` heading in the main body corresponds to a control row in the Purpose table, in the same order.
+
 ### 2.3 Table Conversion Rules
 
 Convert to tables when content has:
@@ -514,7 +555,8 @@ If PDF files exist in the folder, perform a **detailed section-by-section compar
 | P02 | file — Sec Y  | Another detail              | Partial | Incorporate |
 | P03 | file — Sec Z  | Detail already in procedure | Yes     | Not needed  |
 
-**Column constraints:** Keep "Content" under 150 characters. Truncate with "..." if needed; full detail goes in Change Log.
+**Column constraints:
+** Keep "Content" under 150 characters. Truncate with "..." if needed; full detail goes in Change Log.
 
 **What to look for in each PDF:**
 
@@ -537,6 +579,9 @@ If PDF files exist in the folder, perform a **detailed section-by-section compar
 - The exact same level of detail already exists in the procedure
 - The content is obsolete or superseded by the consolidated procedure
 
+**When incorporating PDF content:
+** Extract and incorporate the actual information directly into the procedure text. Do NOT add citations, references, or attributions to the source PDFs — the goal is to replace them entirely with a self-contained procedure document.
+
 ### 5.3.1 Finding Verification Requirement
 
 Before adding ANY item to the Change Log, you MUST:
@@ -551,11 +596,13 @@ Before adding ANY item to the Change Log, you MUST:
 - Generic issues that "typically" appear in this type of document
 - Memory of similar documents reviewed previously
 
-**Every finding must be traceable to actual text in the document.** If you cannot quote the problematic text, the finding is not valid.
+**Every finding must be traceable to actual text in the document.
+** If you cannot quote the problematic text, the finding is not valid.
 
 ### 5.4 Change Log
 
-**This is the primary deliverable.** ALL findings shall be in this single table—do NOT create separate Critical/Recommendations/Observations sections.
+**This is the primary deliverable.
+** ALL findings shall be in this single table—do NOT create separate Critical/Recommendations/Observations sections.
 
 | ID  | Severity | Location | Actual Text (≤80 chars)    | Issue (≤100 chars)  | Recommendation (≤100 chars)          |
 |-----|----------|----------|----------------------------|---------------------|--------------------------------------|
@@ -565,7 +612,8 @@ Before adding ANY item to the Change Log, you MUST:
 
 **Column constraints:**
 
-- **Actual Text**: Quote the exact problematic text from the document (≤80 chars, truncate with "..."). This column enforces verification—if you cannot fill it, the finding is not valid.
+- **Actual Text
+  **: Quote the exact problematic text from the document (≤80 chars, truncate with "..."). This column enforces verification—if you cannot fill it, the finding is not valid.
 - **Issue** and **Recommendation**: Keep under 100 characters each.
 - **Severity**: Use abbreviations: Crit/Rec/Obs.
 
@@ -610,6 +658,7 @@ Output only:
 Document meets all compliance criteria. No changes required.
 
 ### ISO 27002 Control Coverage
+
 [Include the 5.2 table showing all ✅ Full]
 ```
 
@@ -618,7 +667,8 @@ Document meets all compliance criteria. No changes required.
 1. **Do NOT report Observe-level items if there are zero Critical and zero Recommend items** — the document passes
 2. **Do NOT suggest alternative phrasings** for text that already uses "shall" with a clear actor
 3. **Do NOT suggest restructuring** tables or sections that are correctly formatted
-4. **Do NOT add requirements** beyond what ISO 27002 guidance specifies — if the guidance says "should consider X" and the procedure doesn't mention X, this is acceptable (not a gap)
+4. **Do NOT add requirements
+   ** beyond what ISO 27002 guidance specifies — if the guidance says "should consider X" and the procedure doesn't mention X, this is acceptable (not a gap)
 5. **Do NOT flag style preferences** — if two phrasings are equally compliant, the existing one is correct
 6. **Observations are optional** — only include if genuinely useful, never to pad the report
 
