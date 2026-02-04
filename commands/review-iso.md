@@ -17,28 +17,23 @@ When asked to review a folder, identify and categorize files as follows:
 1. Identify the procedure document (filename contains "Procedure")
 2. **Gather organizational context** by searching for and reading other
    `*Procedure.md` files in sibling folders (excluding the target procedure being reviewed). Use this context to:
-
-   - **Avoid duplication
-     **: If a topic is already covered in another procedure, reference that procedure instead of repeating the content. Use format: "See [Procedure Name] for [topic]."
-   - **Ensure consistency
-     **: Use the same terminology, role names, and phrasing patterns established in existing procedures
-   - **Validate cross-references**: Verify that any referenced procedures actually exist and use correct names
-   - **Inform content creation
-     **: When writing or updating sections, draw on the broader organizational context — understand how roles are defined, what approval chains exist, and what processes are already documented elsewhere
-   - **Identify appropriate scope boundaries
-     **: Recognize when content belongs in a different procedure and recommend moving or referencing it accordingly
-
+   - **Avoid duplication**: If a topic is already covered in another procedure, reference that procedure instead of repeating the content. Use format: "See [Procedure Name] for [topic]."
+   - **Ensure consistency**: Use the same terminology, role names, and phrasing patterns established in existing procedures
+   - **Validate cross-references with verification**: When a procedure references another document:
+     1. **Open and read the referenced procedure** to confirm it exists
+     2. **Verify the referenced content** actually covers the claimed topic
+     3. **Check section names/headings** match what's referenced (if specific sections are cited)
+     4. **Flag broken references** if the referenced procedure doesn't exist or doesn't contain the expected content
+   - **Inform content creation**: When writing or updating sections, draw on the broader organizational context — understand how roles are defined, what approval chains exist, and what processes are already documented elsewhere
+   - **Identify appropriate scope boundaries**: Recognize when content belongs in a different procedure and recommend moving or referencing it accordingly
 3. Read all control reference files to understand the ISO 27002 requirements
 4. **Thoroughly review each PDF file section-by-section** and compare against the procedure document to identify:
-
    - Specific requirements, frequencies, or thresholds present in the PDF but absent from the procedure
    - Operational details (audit cycles, device specifications, incident categories) that add compliance value
    - Procedural steps or checklists that provide implementation clarity
-
 5. Apply the full review process to the procedure document only
 6. In the review output, note any gaps where control reference files indicate requirements not addressed in the procedure
-7. **Recommend incorporating relevant content from legacy PDFs
-   ** — err on the side of flagging content for human review rather than dismissing it
+7. **Recommend incorporating relevant content from legacy PDFs** — err on the side of flagging content for human review rather than dismissing it
 
 **Important:**
 
@@ -64,12 +59,10 @@ If no markdown file with "Procedure" in the filename exists in the folder:
 2. Read all legacy PDFs to extract operational details
 3. Create a new procedure document with the standard structure (see Part 2)
 4. For each control:
-
    - Extract the Purpose and implementation guidance from control reference files
    - Transform "should" statements into "shall" requirements
    - Incorporate specific operational details from legacy PDFs
    - Assign responsible roles based on organizational context (small org principles)
-
 5. Name the file: `[Topic]-Procedure.md` (e.g., `Asset-Management-Procedure.md`)
 
 ### When Sections Are Missing
@@ -77,11 +70,9 @@ If no markdown file with "Procedure" in the filename exists in the folder:
 If the procedure document exists but is missing required sections or control coverage:
 
 1. **Identify missing sections** by comparing:
-
    - Controls listed in Purpose section vs. sections in document body
    - ISO 27002 guidance elements vs. procedure coverage
    - Legacy PDF content vs. procedure content
-
 2. **Construct missing sections** using this approach:
 
 | Source                      | How to Use                                                                   |
@@ -90,7 +81,7 @@ If the procedure document exists but is missing required sections or control cov
 | **Legacy PDFs**             | Extract specific frequencies, thresholds, checklists, role assignments       |
 | **Organizational Context**  | Apply small org principles — simplify roles, reduce approval layers          |
 
-1. **Section Construction Format:**
+**Section Construction Format:**
 
 ```markdown
 # [Section Title Based on Control]
@@ -273,6 +264,139 @@ Apply the following language quality checks with **minimal rewriting**:
 - Regional spelling variations (British vs. American) if consistent
 - Industry-standard terminology even if verbose
 - Direct quotes from referenced standards
+
+### 1.5 Monitoring and Measurement Clarity
+
+Every procedure shall clearly define how its effectiveness will be monitored and measured. Validate the following:
+
+| Validation                     | Requirement                                                                                                                                     |
+|--------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Metrics Defined**            | The procedure shall specify measurable indicators of success (e.g., compliance rates, incident counts, review completion percentages)           |
+| **Measurement Frequency**      | The procedure shall state how often metrics are collected or reviewed (e.g., monthly, quarterly, annually)                                      |
+| **Measurement Responsibility** | A specific role shall be assigned responsibility for collecting and reporting metrics                                                           |
+| **Thresholds/Targets**         | Where applicable, acceptable thresholds or targets shall be defined (e.g., "95% compliance", "response within 24 hours")                        |
+| **Reporting Mechanism**        | The procedure shall specify how monitoring results are reported and to whom (e.g., "reported to management review", "included in ISMS metrics") |
+
+**Flag for review if:**
+
+- No monitoring or measurement requirements are defined
+- Metrics are vague or unmeasurable (e.g., "ensure adequate security" without defining what "adequate" means)
+- Frequency of measurement is not specified
+- No responsible party is assigned for monitoring activities
+- Monitoring results have no defined reporting path
+
+**Acceptable monitoring approaches for small organizations:**
+
+- Combined metrics reported through management review
+- Risk-based monitoring frequency (critical controls monitored more frequently)
+- Simplified dashboards or status reports rather than complex KPI frameworks
+- Qualitative assessments where quantitative metrics are impractical
+
+### 1.6 Cross-Reference Validation
+
+When a procedure references another procedure or document, the reference shall be validated by actually opening and reading the referenced document.
+
+**Validation Process:**
+
+| Step | Action                                                                                                         |
+|------|----------------------------------------------------------------------------------------------------------------|
+| 1    | **Identify all cross-references** in the procedure (e.g., "See [Procedure Name]", "as defined in [Document]")  |
+| 2    | **Open each referenced document** using the Read tool to confirm it exists                                     |
+| 3    | **Verify content alignment** — confirm the referenced document actually covers the topic claimed               |
+| 4    | **Check specific sections** — if a section or heading is cited, verify it exists and contains relevant content |
+| 5    | **Validate terminology consistency** — ensure role names, terms, and definitions match between documents       |
+
+**Cross-Reference Validation Table:**
+
+For each cross-reference found, document the validation result:
+
+| Reference Text               | Target Document        | Exists | Content Verified | Issue (if any)                    |
+|------------------------------|------------------------|--------|------------------|-----------------------------------|
+| "See Access Control Proc..." | Access-Control-Proc... | Yes/No | Yes/No           | Brief description of any mismatch |
+
+**Flag for review if:**
+
+- Referenced procedure does not exist
+- Referenced procedure exists but does not cover the claimed topic
+- Referenced section or heading does not exist in the target document
+- Role names or terminology differ between documents
+- Circular references exist (A references B, B references A for the same topic)
+
+**When cross-reference validation fails:**
+
+1. **Missing document**: Flag as Critical — the reference creates a compliance gap
+2. **Content mismatch**: Flag as Recommend — suggest either updating the reference or adding missing content
+3. **Section not found**: Flag as Recommend — suggest updating to reference the correct section
+4. **Terminology inconsistency**: Flag as Observe — note for consistency review
+
+### 1.7 Records Validation
+
+ISO 27001 requires documented information (records) as evidence that activities have been performed. Every procedure shall identify what records are created, maintained, and retained.
+
+**Records Identification:**
+
+Scan the procedure for references to records, which may appear as:
+
+- Explicit mentions: "records shall be maintained", "log", "register", "report", "evidence"
+- Implied records: approval documentation, review minutes, audit trails, change logs
+- Forms or templates: referenced forms, checklists, or templates
+- System-generated records: automated logs, tickets, alerts
+
+**Validation Requirements:**
+
+| Validation             | Requirement                                                                                                  |
+|------------------------|--------------------------------------------------------------------------------------------------------------|
+| **Records Identified** | Procedure shall explicitly list what records are created or maintained                                       |
+| **Record Location**    | Procedure shall specify where records are stored (e.g., "in the ISMS repository", "in the ticketing system") |
+| **Retention Period**   | Procedure shall define how long records are retained, or reference a retention policy                        |
+| **Access Control**     | Procedure shall specify who can access the records                                                           |
+| **Record Format**      | Procedure should indicate the format (e.g., form, log entry, report) or reference a template                 |
+| **Responsibility**     | A role shall be assigned responsibility for maintaining records                                              |
+
+**Records Reference Validation:**
+
+When a procedure references a specific record, form, or template:
+
+| Step | Action                                                                                                      |
+|------|-------------------------------------------------------------------------------------------------------------|
+| 1    | **Identify all record references** (e.g., "complete Form X", "update the Asset Register", "use Template Y") |
+| 2    | **Search for the referenced record/template** in the repository or sibling folders                          |
+| 3    | **Open and verify** the record exists and matches the described purpose                                     |
+| 4    | **Check field alignment** — if the procedure specifies fields to complete, verify they exist in the form    |
+
+**Records Validation Table:**
+
+For each record or form referenced, document the validation result:
+
+| Record/Form Referenced | Location               | Exists | Fields Match | Retention Defined | Issue (if any)           |
+|------------------------|------------------------|--------|--------------|-------------------|--------------------------|
+| "Asset Register"       | /templates/assets.xlsx | Yes/No | Yes/No       | Yes/No            | Brief description of gap |
+| "Incident Report Form" | /forms/incident.md     | Yes/No | Yes/No       | Yes/No            | Brief description of gap |
+
+**Flag for review if:**
+
+- Procedure creates records but doesn't identify what they are
+- Referenced forms or templates do not exist
+- Record storage location is not specified
+- Retention period is not defined and no retention policy is referenced
+- No role is assigned responsibility for record maintenance
+- Form fields mentioned in procedure don't exist in the actual form
+
+**When records validation fails:**
+
+1. **Missing record definition**: Flag as Critical — ISO 27001 clause 7.5 requires documented information
+2. **Referenced form doesn't exist**: Flag as Critical — creates compliance gap
+3. **No retention period**: Flag as Recommend — suggest adding retention requirement or policy reference
+4. **Missing storage location**: Flag as Recommend — suggest specifying where records are maintained
+5. **Field mismatch**: Flag as Observe — note inconsistency between procedure and form
+
+**Acceptable records approaches for small organizations:**
+
+- Centralized ISMS repository for all records
+- Combined registers (e.g., single asset/risk/incident register)
+- Retention aligned with legal minimums rather than extended periods
+- Electronic records preferred over paper-based
+- Automated records from existing tools (ticketing system, cloud logs) rather than manual logs
 
 ---
 
@@ -483,6 +607,31 @@ After all transformations, verify:
 - [ ] All acronyms are defined and used consistently
 - [ ] All references are current and cited in body
 
+### Monitoring and Measurement
+
+- [ ] Procedure defines measurable indicators of effectiveness
+- [ ] Measurement frequency is specified (e.g., monthly, quarterly, annually)
+- [ ] Responsible role for monitoring is assigned
+- [ ] Thresholds or targets are defined where applicable
+- [ ] Reporting mechanism for monitoring results is specified
+
+### Cross-Reference Validation
+
+- [ ] All cross-references to other procedures have been verified by opening the referenced document
+- [ ] Referenced procedures exist and contain the claimed content
+- [ ] Specific sections cited in references exist in target documents
+- [ ] Terminology and role names are consistent across referenced documents
+- [ ] No broken or dangling references remain
+
+### Records
+
+- [ ] Procedure identifies what records are created or maintained
+- [ ] Record storage location is specified
+- [ ] Retention period is defined or retention policy is referenced
+- [ ] Responsible role for record maintenance is assigned
+- [ ] All referenced forms/templates have been verified by opening them
+- [ ] Form fields mentioned in procedure exist in the actual form
+
 ### Structure and Readability
 
 - [ ] No table appears without introductory sentence
@@ -619,9 +768,12 @@ Before adding ANY item to the Change Log, you MUST:
 
 **Severity Levels:**
 
-- **Critical** (Critical): Compliance gaps, missing ISO 27002 requirements, ambiguous requirements, incorrect references
-- **Recommend** (Recommend): Language fixes (should→shall, passive→active), clarity improvements, structural issues
-- **Observe** (Observe): Style suggestions, optional improvements
+- **Critical
+  ** (Critical): Compliance gaps, missing ISO 27002 requirements, ambiguous requirements, incorrect references, broken cross-references (referenced procedure doesn't exist), missing monitoring/measurement requirements, missing record definitions (ISO 7.5), referenced forms/templates don't exist
+- **Recommend
+  ** (Recommend): Language fixes (should→shall, passive→active), clarity improvements, structural issues, cross-reference content mismatches, incomplete monitoring metrics, missing retention periods, missing record storage location
+- **Observe
+  ** (Observe): Style suggestions, optional improvements, terminology inconsistencies across documents, form field mismatches between procedure and template
 
 **Change Log Requirements:**
 
@@ -638,15 +790,18 @@ Before adding ANY item to the Change Log, you MUST:
 
 A document **passes review** and requires no further changes when ALL of the following are true:
 
-| Criterion               | Pass Condition                                                                           |
-|-------------------------|------------------------------------------------------------------------------------------|
-| **ISO 27002 Coverage**  | All controls show ✅ Full coverage in section 5.2                                        |
-| **Legacy PDF Content**  | All "Incorporate" items from section 5.3 have been addressed, or no incorporation needed |
-| **Critical Issues**     | Zero items with "Critical" severity in Change Log                                        |
-| **Procedural Language** | All requirements use "shall" with clear actor                                            |
-| **References**          | All standards current, all citations valid                                               |
-| **Terms**               | All acronyms defined and used consistently                                               |
-| **Markdown**            | Passes markdownlint validation                                                           |
+| Criterion                      | Pass Condition                                                                           |
+|--------------------------------|------------------------------------------------------------------------------------------|
+| **ISO 27002 Coverage**         | All controls show ✅ Full coverage in section 5.2                                        |
+| **Legacy PDF Content**         | All "Incorporate" items from section 5.3 have been addressed, or no incorporation needed |
+| **Critical Issues**            | Zero items with "Critical" severity in Change Log                                        |
+| **Procedural Language**        | All requirements use "shall" with clear actor                                            |
+| **References**                 | All standards current, all citations valid                                               |
+| **Terms**                      | All acronyms defined and used consistently                                               |
+| **Monitoring & Measurement**   | Procedure defines metrics, frequency, responsibility, and reporting mechanism            |
+| **Cross-Reference Validation** | All referenced procedures verified by opening them; no broken or mismatched references   |
+| **Records**                    | Records identified, storage/retention defined, referenced forms verified by opening them |
+| **Markdown**                   | Passes markdownlint validation                                                           |
 
 **When a document passes:**
 
